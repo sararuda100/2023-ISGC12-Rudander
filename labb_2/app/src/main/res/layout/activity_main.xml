@@ -53,6 +53,7 @@
             android:id="@+id/guessesTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Försök kvar: "
             android:textStyle="bold"/>
     </LinearLayout>
 

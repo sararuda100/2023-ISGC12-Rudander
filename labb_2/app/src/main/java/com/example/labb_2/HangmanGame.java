@@ -3,10 +3,8 @@ package com.example.labb_2;
 import android.util.Log;
 
 public class HangmanGame {
-    private String secretWord;
-    private String currentStatus;
-    private int maxAttempts;
-    private int wrongGuesses;
+    private String secretWord, currentStatus;
+    private int maxAttempts, wrongGuesses;
 
     public HangmanGame(String word, int maxAttempts) {
         this.secretWord = word.toLowerCase();

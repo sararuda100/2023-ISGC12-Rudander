@@ -15,13 +15,8 @@ public class MainActivity extends AppCompatActivity {
 
     /*deklaration av UI-element;*/
     private EditText guessEditText;
-    private Button newGameButton;
-    private Button guessButton;
-    private TextView statusTextView;
-
-    private TextView guessedTextView;
-
-    private TextView guessesTextView;
+    private Button newGameButton, guessButton;
+    private TextView statusTextView, guessedTextView, guessesTextView;
     private WordManager wordManager;
     private HangmanGame hangmanGame;
     @Override
@@ -37,33 +32,34 @@ public class MainActivity extends AppCompatActivity {
         guessedTextView = findViewById(R.id.guessedTextView);
         guessesTextView = findViewById(R.id.guessesTextView);
 
-        /* knapp för att starta nytt spel */
+        /* Skapar nytt hangMan-objekt, slumpar ett ord, uppdaterar GUI med slumpat ord*/
+        wordManager = new WordManager();
+        String randomWord = wordManager.getRandomWord();
+        hangmanGame = new HangmanGame(randomWord, 7);
+        statusTextView.setText(hangmanGame.getCurrentStatus());
+
+        /* knapplyssnare för att starta nytt spel */
         newGameButton.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                 // Återställer försök & felgissnings-fälten
-                 guessesTextView.setText("Försök kvar: 7");
+                 /*Återställer försök & felgissnings-fälten*/
+                 guessesTextView.setText("Försök kvar: ");
                  guessedTextView.setText("Fel gissningar: ");
 
-                 // Skapar nytt hangMan-objekt
                  wordManager = new WordManager();
-
                  String randomWord = wordManager.getRandomWord();
-
                  hangmanGame = new HangmanGame(randomWord, 7);
-
-                 // Uppdaterar GUI med slumpade ordet
                  statusTextView.setText(hangmanGame.getCurrentStatus());
 
              }
          });
-        /* Knapp för att göra en gissning */
+        /* Knapplyssnare för gissa-knappen */
         guessButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String guessedLetter = guessEditText.getText().toString();
 
-                // Kontrollerar om gissningen är av giltigt värde
+                //Kontroll om gissningen är av giltigt värde
                 if (guessedLetter.length() == 1 && guessedLetter.matches("[a-zA-Z]")) {
 
                     char letter = guessedLetter.toLowerCase().charAt(0);
@@ -77,14 +73,36 @@ public class MainActivity extends AppCompatActivity {
 
                         if(hangmanGame.isGameWon()) {
                             Toast.makeText(getApplicationContext(), "You won!", Toast.LENGTH_SHORT).show();
+
+                            /*slumpar ett nytt ord när spelaren vunnit*/
+                            wordManager = new WordManager();
+                            String randomWord = wordManager.getRandomWord();
+                            hangmanGame = new HangmanGame(randomWord, 7);
+                            statusTextView.setText(hangmanGame.getCurrentStatus());
+
+                            /* Återställer försök & felgissnings-fälten */
+                            guessesTextView.setText("Försök kvar: ");
+                            guessedTextView.setText("Fel gissningar: ");
+
                         }
                     } else {
-                        //uppdaterar antal försök och fel-gissningar
+                        /* uppdaterar antal försök och fel-gissningar */
                         guessesTextView.setText("Försök kvar: " + hangmanGame.getWrongGuesses());
                         guessedTextView.append(" " + letter);
 
                         if(hangmanGame.isGameLost()){
                             Toast.makeText(getApplicationContext(), "YOU LOST", Toast.LENGTH_SHORT).show();
+
+                            /*slumpar ett nytt ord när spelaren förlorat*/
+                            wordManager = new WordManager();
+                            String randomWord = wordManager.getRandomWord();
+                            hangmanGame = new HangmanGame(randomWord, 7);
+                            statusTextView.setText(hangmanGame.getCurrentStatus());
+
+                            /* Återställer försök & felgissnings-fält */
+                            guessesTextView.setText("Försök kvar: ");
+                            guessedTextView.setText("Fel gissningar: ");
+
                         }
 
                     }
