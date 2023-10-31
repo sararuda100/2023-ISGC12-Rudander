@@ -17,6 +17,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
         //Laddar kundvagnens produkter från filen vi skapat i FileManager klassen
         List<Product> cartItems = FileManager.loadShoppingCart(this);
 
+        Log.d("cartItems", cartItems.toString());
         //Skapar en ArrayAdapter för att visa kundvagnens produkter i en ListView.
         ArrayAdapter<Product> adapter = new ArrayAdapter<>(
                 this, android.R.layout.simple_list_item_1, cartItems

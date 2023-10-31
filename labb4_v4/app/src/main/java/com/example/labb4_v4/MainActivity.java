@@ -53,9 +53,6 @@ public class MainActivity extends AppCompatActivity implements ApiCallback {
         apiCall = new APICall();
         apiCall.fetchData(requestQueue, this, url);
 
-        //skapar en instans av ShoppingCart för att hantera kundvagnen och skickar med context
-        ShoppingCart shoppingCart = ShoppingCart.getInstance(this);
-
         //skapar en ProductAdapter för att visa produkter i ListView.
         productAdapter = new ProductAdapter(this, productList);
         listView.setAdapter(productAdapter);

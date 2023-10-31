@@ -50,10 +50,24 @@ public class ProductAdapter extends ArrayAdapter<Product> {
         productPrice.setText("$" + String.valueOf(currentProduct.getPrice()));
 
         //lyssnare för knappen "shopping cart"
+        //lyssnare för "Add to Cart" button
         addToCartBtn.setOnClickListener(v -> {
-            //Lägger till det aktuella Product-objektet i kundvagnen.
-            ShoppingCart.getInstance(context).addItem(currentProduct);
+            //gettar current shoppingcart
+            ShoppingCart shoppingCart = ShoppingCart.getInstance(context);
+
+            //hämtar the existerande varorna i varukorgen från filen
+            List<Product> cartItems = FileManager.loadShoppingCart(context);
+
+            //lägger till i carten
+            cartItems.add(currentProduct);
+
+            //uppdaterar cart med den nya listan med items
+            shoppingCart.setCartItems(cartItems);
+
+            //sparar den uppdaterade listan till filen
+            FileManager.saveShoppingCart(context, shoppingCart.getCartItems());
         });
+
 
         //Definiera en onClickListener för hela vyn (objektet).
         convertView.setOnClickListener(new View.OnClickListener() {

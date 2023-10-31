@@ -38,4 +38,12 @@ public class ShoppingCart {
         return cartItems;
     }
 
+    //metod som sätter cartItems
+    public void setCartItems(List<Product> items) {
+        cartItems = items;
+        //Anropar filhanteraren för att spara uppdaterade shoppingcarten till filen
+        FileManager.saveShoppingCart(context, cartItems);
+    }
+
+
 }

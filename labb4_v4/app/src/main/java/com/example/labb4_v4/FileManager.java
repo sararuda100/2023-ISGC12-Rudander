@@ -17,7 +17,7 @@ public class FileManager {
     public static void saveShoppingCart(Context context, List<Product> shoppingCart) {
         //skapar en fil i appens för att lagra kundvagnen
         File file = new File(context.getFilesDir(), "shopping_cart.txt");
-
+        Log.d("add-knapp", "hej");
         try {
             FileWriter writer = new FileWriter(file);
             BufferedWriter bufferedWriter = new BufferedWriter(writer);
@@ -46,7 +46,7 @@ public class FileManager {
         List<Product> shoppingCart = new ArrayList<>();
         //anger sökvägen till filen där kundvagnen är sparad.
         File file = new File(context.getFilesDir(), "shopping_cart.txt");
-
+        Log.d("show-knapp", "nu ska load komma");
         try {
             FileReader reader = new FileReader(file);
             BufferedReader bufferedReader = new BufferedReader(reader);
